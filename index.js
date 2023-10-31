@@ -1,6 +1,6 @@
-import { Client, GatewayIntentBits, Events } from 'discord.js';
-import { registerCommands, loadCommands} from './commands.js'
-import dotenv from 'dotenv';
+import { Client, GatewayIntentBits, Events } from "discord.js";
+import { registerCommands, loadCommands } from "./commands.js";
+import dotenv from "dotenv";
 
 const client = new Client({
   intents: [
@@ -15,7 +15,7 @@ const client = new Client({
 registerCommands(); // Register all commands
 
 client.on(Events.InteractionCreate, async (interaction) => {
-  loadCommands(interaction)
+  loadCommands(interaction);
 });
 
 // Login bot

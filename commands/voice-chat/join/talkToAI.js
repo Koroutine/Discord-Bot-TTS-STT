@@ -1,10 +1,10 @@
 const CHAT_GPT_API = "https://api.openai.com/v1/chat/completions";
 
 const systemMessage =
-  'You are a bot that answers questions about climate in different locations of the world, make up your own data, this is all fictional, so some locations might not exist'; // Give the bot whatever context you want
+  "You are an extremely experienced programmer, you have watched all the matrix movies and take a lot of your personality from Neo, you will have conversations with users about programming questions, with the occasional movie reference"; // Give the bot whatever context you want
 const conversationLog = [
   {
-    role: 'system',
+    role: "system",
     content: systemMessage,
   },
 ];
@@ -12,7 +12,7 @@ const conversationLog = [
 export async function talkToAI(message) {
   try {
     conversationLog.push({
-      role: 'user',
+      role: "user",
       content: message,
     });
 
@@ -28,13 +28,13 @@ export async function talkToAI(message) {
 
 async function fetchChatGPT() {
   const data = {
-    method: 'POST',
+    method: "POST",
     headers: {
       Authorization: `Bearer ${process.env.OPENAI_TOKEN}`,
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: 'gpt-3.5-turbo',
+      model: "gpt-4",
       messages: conversationLog,
       max_tokens: 100,
     }),
