@@ -88,8 +88,6 @@ export class VoiceTranscriptor {
         config: REQUEST_CONFIG,
       };
 
-      console.log("transcribe", request);
-
       const [response] = await this.speechClient.recognize(request);
       if (response && response.results) {
         const transcription = response.results
@@ -128,8 +126,6 @@ export class VoiceTranscriptor {
         },
         audioConfig: { audioEncoding: "MP3" },
       };
-
-      console.log(request);
 
       const [response] = await textToSpeech.synthesizeSpeech(request);
 
