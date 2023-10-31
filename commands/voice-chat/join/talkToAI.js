@@ -17,6 +17,9 @@ export async function talkToAI(message) {
     });
 
     const response = await fetchChatGPT();
+
+    console.log("chatgpt", response);
+
     conversationLog.push(response.message);
 
     return response.message.content;
@@ -41,5 +44,11 @@ async function fetchChatGPT() {
   };
   let response = await fetch(CHAT_GPT_API, data);
   response = await response.json();
+
+  if (!response.choices) {
+    console.log(response);
+    throw new Error("No choices");
+  }
+
   return response.choices[0];
 }
