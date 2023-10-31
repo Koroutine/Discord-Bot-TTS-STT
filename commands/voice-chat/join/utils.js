@@ -64,7 +64,7 @@ export class VoiceTranscriptor {
     }); // Subscription on when we receive data
 
     subscription.once("end", async () => {
-      if (buffers.length < 70) {
+      if (buffers.length < 50) {
         return console.log("Audio is too short", buffers.length);
       }
 
