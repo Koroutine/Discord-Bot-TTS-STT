@@ -123,8 +123,8 @@ export class VoiceTranscriptor {
       const request = {
         input: { text },
         voice: {
-          languageCode: "en-AU", // Change it to the language you want
-          ssmlGender: "MALE", // Gender
+          languageCode: "en-GB", // Change it to the language you want
+          ssmlGender: "FEMALE", // Gender
         },
         audioConfig: { audioEncoding: "MP3" },
       };
