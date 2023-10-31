@@ -1,5 +1,6 @@
 import pkg from "@discordjs/opus";
 import whisper from "whisper-node";
+import toWav from "audiobuffer-to-wav";
 const { OpusEncoder } = pkg;
 
 import {
@@ -152,8 +153,9 @@ export class VoiceTranscriptor {
 
   getOutputPath(buffers) {
     const concatenatedBuffer = Buffer.concat(buffers);
-    const outputPath = "./assets/input.pcm";
-    fs.writeFileSync(outputPath, concatenatedBuffer);
+    const wavBuffer = toWav(concatenatedBuffer);
+    const outputPath = "./assets/input.wav";
+    fs.writeFileSync(outputPath, wavBuffer);
     return outputPath;
   }
 }
