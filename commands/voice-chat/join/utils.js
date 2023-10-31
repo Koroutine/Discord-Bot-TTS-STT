@@ -153,7 +153,11 @@ export class VoiceTranscriptor {
 
   getOutputPath(buffers) {
     const concatenatedBuffer = Buffer.concat(buffers);
-    const wavBuffer = toWav(concatenatedBuffer);
+
+    const context = new AudioContext();
+    context.copyToChannel(concatenatedBuffer, 0);
+
+    const wavBuffer = toWav(context);
     const outputPath = "./assets/input.wav";
     fs.writeFileSync(outputPath, wavBuffer);
     return outputPath;
