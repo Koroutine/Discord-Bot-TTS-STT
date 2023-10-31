@@ -1,4 +1,5 @@
 import pkg from "@discordjs/opus";
+import whisper from "whisper-node";
 const { OpusEncoder } = pkg;
 
 import {
@@ -8,7 +9,7 @@ import {
   createAudioPlayer,
 } from "@discordjs/voice";
 import { TextToSpeechClient } from "@google-cloud/text-to-speech";
-import { SpeechClient } from "@google-cloud/speech";
+
 import fs from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
@@ -25,7 +26,6 @@ const REQUEST_CONFIG = {
 export class VoiceTranscriptor {
   connection;
   receiver;
-  speechClient = new SpeechClient();
 
   message;
   commandsChannel;
@@ -80,31 +80,15 @@ export class VoiceTranscriptor {
 
   async getTranscription(tempFileName) {
     try {
-      const bytes = fs.readFileSync(tempFileName).toString("base64");
-      const request = {
-        audio: {
-          content: bytes,
-        },
-        config: REQUEST_CONFIG,
-      };
+      const response = await whisper(tempFileName);
 
-      const [response] = await this.speechClient.recognize(request);
-      if (response && response.results) {
-        const transcription = response.results
-          .map((result) => {
-            if (result.alternatives) return result.alternatives[0].transcript;
-            else {
-              console.log(result);
-              throw Error("No alternatives");
-            }
-          })
-          .join("\n");
+      const transcription = response
+        .map((result) => {
+          return result.speech;
+        })
+        .join("\n");
 
-        return transcription.toLowerCase();
-      } else {
-        console.log(response);
-        throw Error("No response or response results");
-      }
+      return transcription;
     } catch (error) {
       console.log(error);
     }
